@@ -7,8 +7,9 @@ repository: "https://github.com/chrisvugrinec/brigade-aks-dockerexample"
 cloneURL: "https://github.com/chrisvugrinec/brigade-aks-dockerexample"
 
 secrets:
-  username: http://vuggieopenshiftdemo 
-  tenant: 72f988bf-86f1-41af-91ab-2d7cd011db47
+  username: http://YOUR_SERVICEPRINCIPLE
+  tenant: YOUR_TENANTID
+  password: YOUR_PASSWORD
 
 vcsSidecar: "deis/git-sidecar:latest"
 allowPrivilegedJobs: "true"
