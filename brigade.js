@@ -27,7 +27,7 @@ events.on("dodemo", (brigadeEvent, project) => {
     "az login --service-principal --username $USERNAME --password $PASSWORD --tenant $TENANT",
     "git clone https://github.com/chrisvugrinec/busybox-example.git",
     "cd busybox-example",
-    "k create -f busybox.yaml"
+    "kubectl create -f busybox.yaml"
   ];
 
 
