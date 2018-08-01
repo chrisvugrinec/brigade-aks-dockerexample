@@ -26,7 +26,7 @@ events.on("dodemo", (brigadeEvent, project) => {
   burstJob.tasks = [
     "az login --service-principal --username $USERNAME --password $PASSWORD --tenant $TENANT",
     "git clone https://github.com/chrisvugrinec/busybox-example.git",
-    "cd busybox-example.git",
+    "cd busybox-example",
     "k create -f busybox.yaml"
   ];
 
