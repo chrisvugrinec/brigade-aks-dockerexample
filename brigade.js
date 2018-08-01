@@ -1,8 +1,21 @@
 const { events, Job } = require("brigadier")	
 
 events.on("scale", (brigadeEvent, project) => {
-  console.log("XXXX: "+brigadeEvent.payload);
-  console.log("type: "+brigadeEvent.type);
+  
+  console.log("executing: "+brigadeEvent.type+" event");
+  
+  var scaleJob = new Job("cmdemo-scaledeployment", "cvugrinec/azcli-kubectl") 
+  scaleJob.env = {
+    "USERNAME": project.secrets.username,
+    "PASSWORD": project.secrets.password,
+    "TENANT": project.secrets.tenant,
+    "INSTANCES": brigadeEvent.payload
+  }
+  scaleJob.tasks = [
+    "az login --service-principal --username $USERNAME --password $PASSWORD --tenant $TENANT",
+    "kubectl scale deploy busybox --replicas=$INSTANCES",
+  ];
+  scaleJob.run();
 })
 	
 events.on("deploy", (brigadeEvent, project) => {	
