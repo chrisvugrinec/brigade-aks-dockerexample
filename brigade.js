@@ -51,7 +51,7 @@ events.on("deploy", (brigadeEvent, project) => {
 
   // Example of piping of jobs...first listPodJob...and then burstJob
   listJob.run().then(() => {
-    burstJob.run()
+    deployJob.run()
   })
 
 
