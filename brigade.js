@@ -1,7 +1,7 @@
 const { events, Job } = require("brigadier")	
 
 events.on("scale", (brigadeEvent, project) => {
-  console.log("XXXX: "+project.secret.payload);
+  console.log("XXXX: "+project.secrets.payload);
 })
 	
 events.on("deploy", (brigadeEvent, project) => {	
