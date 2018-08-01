@@ -1,8 +1,12 @@
 const { events, Job } = require("brigadier")	
-  	
-events.on("dodemo", (brigadeEvent, project) => {	
 
-  console.log("==> handling 'cmdemo' job")	
+events.on("scale", (brigadeEvent, project) => {
+  console.log("XXXX: "+project.secret.payload);
+})
+	
+events.on("deploy", (brigadeEvent, project) => {	
+
+  console.log("==> handling 'deployment' job")	
 
   // List Pod Job
   var listJob = new Job("cmdemo-listpods", "cvugrinec/azcli-kubectl")	
@@ -16,17 +20,17 @@ events.on("dodemo", (brigadeEvent, project) => {
     "kubectl get pods",	
   ];	
 
-  // Burst Job, using ACI connector plugin...expanding cluster with ACI nodes
-  var burstJob = new Job("cmdemo-burstjob", "cvugrinec/azcli-kubectl")
-  burstJob.env = {
+  // Deploy Job, using ACI connector plugin...expanding cluster with ACI nodes
+  var deployJob = new Job("cmdemo-deployjob", "cvugrinec/azcli-kubectl")
+  deployJob.env = {
     "USERNAME": project.secrets.username,
     "PASSWORD": project.secrets.password,
     "TENANT": project.secrets.tenant
   }
-  burstJob.tasks = [
+  deployJob.tasks = [
     "az login --service-principal --username $USERNAME --password $PASSWORD --tenant $TENANT",
-    "git clone https://github.com/chrisvugrinec/busybox-example.git",
-    "cd busybox-example",
+    "git clone https://github.com/chrisvugrinec/aks-brigadedemo.git",
+    "cd aks-brigadedemo/busybox/",
     "kubectl create -f busybox.yaml"
   ];
 
@@ -37,6 +41,6 @@ events.on("dodemo", (brigadeEvent, project) => {
   })
 
 
-  console.log("==> finished 'cmdemo' job")	
+  console.log("==> finished 'deployment' job")	
 })
 
