@@ -5,21 +5,20 @@ events.on("dodemo", (brigadeEvent, project) => {
   console.log("==> handling 'cmdemo' job")	
 
   // List Pod Job
-  var listPodJob = new Job("cmdemo-listpods", "cvugrinec/azcli-kubectl")	
-  listPodJob.env = {
+  var listJob = new Job("cmdemo-listpods", "cvugrinec/azcli-kubectl")	
+  listJob.env = {
     "USERNAME": project.secrets.username, 
     "PASSWORD": project.secrets.password,
     "TENANT": project.secrets.tenant 
   }
-  listPodJob = true;	
-  listPodJob.tasks = [	
+  listJob.tasks = [	
     "az login --service-principal --username $USERNAME --password $PASSWORD --tenant $TENANT",	
     "kubectl get pods",	
   ];	
 
   // Burst Job, using ACI connector plugin...expanding cluster with ACI nodes
   var burstJob = new Job("cmdemo-burstjob", "cvugrinec/azcli-kubectl")
-  listPodJob.env = {
+  burstJob.env = {
     "USERNAME": project.secrets.username,
     "PASSWORD": project.secrets.password,
     "TENANT": project.secrets.tenant
@@ -33,7 +32,7 @@ events.on("dodemo", (brigadeEvent, project) => {
 
 
   // Example of piping of jobs...first listPodJob...and then burstJob
-  listPodJob.run().then(() => {
+  listJob.run().then(() => {
     burstJob.run()
   })
 
