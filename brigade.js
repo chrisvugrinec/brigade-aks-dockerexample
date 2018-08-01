@@ -5,7 +5,7 @@ events.on("dodemo", (brigadeEvent, project) => {
   console.log("==> handling 'cmdemo' job")	
 
   // List Pod Job
-  const listPodJob = new Job("cmdemo-listpods", "cvugrinec/azcli-kubectl")	
+  var listPodJob = new Job("cmdemo-listpods", "cvugrinec/azcli-kubectl")	
   listPodJob.env = {
     "USERNAME": project.secrets.username, 
     "PASSWORD": project.secrets.password,
@@ -18,7 +18,7 @@ events.on("dodemo", (brigadeEvent, project) => {
   ];	
 
   // Burst Job, using ACI connector plugin...expanding cluster with ACI nodes
-  const burstJob = new Job("cmdemo-burstjob", "cvugrinec/azcli-kubectl")
+  var burstJob = new Job("cmdemo-burstjob", "cvugrinec/azcli-kubectl")
   listPodJob.env = {
     "USERNAME": project.secrets.username,
     "PASSWORD": project.secrets.password,
